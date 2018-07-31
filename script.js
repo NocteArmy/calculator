@@ -53,19 +53,19 @@ function calculate(func, exp1, exp2) {
     if(isNaN(+exp1) && exp1.includes('(')) {
         let argsArr = splitArguments(exp1);
         x = argsArr[0] === 'add' || argsArr[0] === 'multiply' ? calculate(...argsArr) : new Error('Opps, wrong function call!');
-        if(x instanceof Error) return x;
+        if(x instanceof Error) { return x; }
     } else {
         x = +exp1;
     }
     if(isNaN(+exp2) && exp2.includes('(')) {
         let argsArr = splitArguments(exp2);
         y = argsArr[0] === 'add' || argsArr[0] === 'multiply' ? calculate(...argsArr) : new Error('Opps, wrong function call!');
-        if(y instanceof Error) return y;
+        if(y instanceof Error) { return y; }
     } else {
         y = +exp2;
     }
     // Check for incorrect expressions and return an Error if so
-    if(isNaN(x) || isNaN(y)) return new Error('Incorrect Expressions: ' + exp1 + ' ' + exp2);
+    if(isNaN(x) || isNaN(y)) { return new Error('Incorrect Expressions: ' + exp1 + ' ' + exp2); }
     // Otherwise return the evaluation of x + y || x * y
     return func === 'add' ? x + y : x * y;
 }
