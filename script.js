@@ -3,8 +3,8 @@
     let input = process.argv[2];
 
     // If input is just an integer value, return a stdout of the integer
-    if(!isNaN(parseInt(input, 10))) {
-        return console.log(parseInt(input, 10));
+    if(!isNaN(+input)) {
+        return console.log(+input);
     }
 
     // If input contains a function, send the input to the splitArguments function and then calculate the result
@@ -50,19 +50,19 @@ function calculate(func, exp1, exp2) {
     let x, y;
     /* If either exp1 or exp2 are not integers and contain parentheses to indicate another function, 
     run the splitArguments function again recursively until finding the pair of two integers */
-    if(isNaN(parseInt(exp1, 10)) && exp1.includes('(')) {
+    if(isNaN(+exp1) && exp1.includes('(')) {
         let argsArr = splitArguments(exp1);
         x = argsArr[0] == 'add' || argsArr[0] == 'multiply' ? calculate(...argsArr) : new Error('Opps, wrong function call!');
         if(x instanceof Error) return x;
     } else {
-        x = parseInt(exp1, 10);
+        x = +exp1;
     }
-    if(isNaN(parseInt(exp2, 10)) && exp2.includes('(')) {
+    if(isNaN(+exp2) && exp2.includes('(')) {
         let argsArr = splitArguments(exp2);
         y = argsArr[0] == 'add' || argsArr[0] == 'multiply' ? calculate(...argsArr) : new Error('Opps, wrong function call!');
         if(y instanceof Error) return y;
     } else {
-        y = parseInt(exp2, 10);
+        y = +exp2;
     }
     // Check for incorrect expressions and return an Error if so
     if(isNaN(x) || isNaN(y)) return new Error('Incorrect Expressions: ' + exp1 + ' ' + exp2);
