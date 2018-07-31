@@ -2,7 +2,7 @@
     // Grab the third argument from the command line
     let input = process.argv[2];
     // List of available functions
-    let availableFuncs = ['add', 'multiply'];
+    let availableFuncs = ['add', 'subtract', 'multiply', 'divide'];
     // If input is just an integer value, return a stdout of the integer
     if(!isNaN(+input)) {
         return console.log(+input);
@@ -48,7 +48,7 @@ function splitArguments(str) {
 }
 
 function calculate(func, exp1, exp2) {
-    let availableFuncs = ['add', 'multiply'];
+    let availableFuncs = ['add', 'subtract', 'multiply', 'divide'];
     let x, y;
     /* If either exp1 or exp2 are not integers and contain parentheses to indicate another function, 
     run the splitArguments function again recursively until finding the pair of two integers */
@@ -68,6 +68,8 @@ function calculate(func, exp1, exp2) {
     }
     // Check for incorrect expressions and return an Error if so
     if(isNaN(x) || isNaN(y)) { return new Error('Incorrect Expressions: ' + exp1 + ' ' + exp2); }
-    // Otherwise return the evaluation of x + y || x * y
-    return func === 'add' ? x + y : x * y;
+    // If the evaluation is a division, check for a zero in the denominator and return an Error if so
+    if(func === 'divide' && y === 0) { return new Error('Cannot divide by zero!'); }
+    // Calculate the result and return it to main
+    return func === 'add' ? x + y : func === 'subtract' ? x - y : func === 'multiply' ? x * y : x / y;
 }
