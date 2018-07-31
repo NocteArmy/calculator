@@ -4,20 +4,23 @@
   "description": "The project requires Node.js to execute the code from the command line with the 'node' batch command",
   "main":  "scripts.js",
   "scripts": {
-    "test": "npm run test:number && npm run test:add && npm run test:multiply && npm run test:nested && npm run test:errors",
+    "test": "npm run test:number && npm run test:add && npm run test:subtract && npm run test:multiply && npm run test:divide && npm run test:nested && npm run test:errors",
     "test:number": "node script.js 123",
     "test:add": "node script.js \"(add 3 3)\"",
+    "test:subtract": "node script.js \"(subtract 3 3)\"",
     "test:multiply": "node script.js \"(multiply 3 3)\"",
+    "test:divide": "node script.js \"(divide 3 3)\"",
     "test:nested": "npm run test:nested1 && npm run test:nested2 && npm run test:nested3 && npm run test:nested4",
     "test:nested1": "node script.js \"(multiply (add 3 3) 3)\"",
     "test:nested2": "node script.js \"(multiply 3 (add 3 3))\"",
     "test:nested3": "node script.js \"(multiply 3 (add 3 (multiply 3 3)))\"",
     "test:nested4": "node script.js \"(multiply (add 3 (multiply 22 (multiply 2 2))) (add 3 (multiply 3 (multiply (add 2 1) 3))))\"",
-    "test:errors": "npm run test:errors1 && npm run test:errors2 && npm run test:errors3 && npm run test:errors4 && npm run test:errors5",
+    "test:errors": "npm run test:errors1 && npm run test:errors2 && npm run test:errors3 && npm run test:errors4 && npm run test:errors5 && npm run test:errors6",
     "test:errors1": "node script.js \"(multipyl 3 3)\"",
     "test:errors2": "node script.js \"(add 3 str)\"",
     "test:errors3": "node script.js \"(multiply (added 3 3) 3)\"",
     "test:errors4": "node script.js \"(multiply (add 3 badNumber) 3)\"",
-    "test:errors5": "node script.js \"(multiply (add 3 3) (add (add 3 string) 3))\""
+    "test:errors5": "node script.js \"(multiply (add 3 3) (add (add 3 string) 3))\"",
+    "test:errors6": "node script.js \"(divide 3 0)\""
   }
 }
