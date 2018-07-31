@@ -9,7 +9,7 @@
 
     // If input contains a function, send the input to the splitArguments function and then calculate the result
     let argsArr = splitArguments(input);
-    let result = argsArr[0] == 'add' || argsArr[0] == 'multiply' ? calculate(...argsArr) : new Error('Opps, wrong function call!');
+    let result = argsArr[0] === 'add' || argsArr[0] === 'multiply' ? calculate(...argsArr) : new Error('Opps, wrong function call!');
 
     // Return the result of the function calls to stdout
     return console.log(result);
@@ -25,7 +25,7 @@ function splitArguments(str) {
     let expArr = inputArr.slice(inputArr.indexOf(" ") + 1);
     let x = '';
     let y = '';
-    if(expArr[0] != "(") {
+    if(expArr[0] !== "(") {
         // If x starts as a number, save it and pass the remainder to y
         x = expArr.slice(0, expArr.indexOf(" ")).join("");
         y = expArr.slice(expArr.indexOf(" ") + 1).join("");
@@ -33,13 +33,13 @@ function splitArguments(str) {
         // If x starts as a new function call, find the end of the function call and pass the remainder to y
         let count = 0;
         expArr.every((val, i, arr) => {
-            if(val == "(") { count++; }
-            if(val == ")") { count--; }
-            if(count == 0) {
+            if(val === "(") { count++; }
+            if(val === ")") { count--; }
+            if(count === 0) {
                 x = arr.slice(0, i + 1).join("");
                 y = arr.slice(i + 2).join("");
             }
-            return count != 0;
+            return count !== 0;
         })
     }
     // Return the func call and two expressions as an array
@@ -52,14 +52,14 @@ function calculate(func, exp1, exp2) {
     run the splitArguments function again recursively until finding the pair of two integers */
     if(isNaN(+exp1) && exp1.includes('(')) {
         let argsArr = splitArguments(exp1);
-        x = argsArr[0] == 'add' || argsArr[0] == 'multiply' ? calculate(...argsArr) : new Error('Opps, wrong function call!');
+        x = argsArr[0] === 'add' || argsArr[0] === 'multiply' ? calculate(...argsArr) : new Error('Opps, wrong function call!');
         if(x instanceof Error) return x;
     } else {
         x = +exp1;
     }
     if(isNaN(+exp2) && exp2.includes('(')) {
         let argsArr = splitArguments(exp2);
-        y = argsArr[0] == 'add' || argsArr[0] == 'multiply' ? calculate(...argsArr) : new Error('Opps, wrong function call!');
+        y = argsArr[0] === 'add' || argsArr[0] === 'multiply' ? calculate(...argsArr) : new Error('Opps, wrong function call!');
         if(y instanceof Error) return y;
     } else {
         y = +exp2;
@@ -67,5 +67,5 @@ function calculate(func, exp1, exp2) {
     // Check for incorrect expressions and return an Error if so
     if(isNaN(x) || isNaN(y)) return new Error('Incorrect Expressions: ' + exp1 + ' ' + exp2);
     // Otherwise return the evaluation of x + y || x * y
-    return func == 'add' ? x + y : x * y;
+    return func === 'add' ? x + y : x * y;
 }
