@@ -1,7 +1,8 @@
 (function() {
     // Grab the third argument from the command line
     let input = process.argv[2];
-
+    // List of available functions
+    let availableFuncs = ['add', 'multiply'];
     // If input is just an integer value, return a stdout of the integer
     if(!isNaN(+input)) {
         return console.log(+input);
@@ -9,7 +10,7 @@
 
     // If input contains a function, send the input to the splitArguments function and then calculate the result
     let argsArr = splitArguments(input);
-    let result = argsArr[0] === 'add' || argsArr[0] === 'multiply' ? calculate(...argsArr) : new Error('Opps, wrong function call!');
+    let result = availableFuncs.includes(argsArr[0]) ? calculate(...argsArr) : new Error('Opps, wrong function call!');
 
     // Return the result of the function calls to stdout
     return console.log(result);
@@ -47,19 +48,20 @@ function splitArguments(str) {
 }
 
 function calculate(func, exp1, exp2) {
+    let availableFuncs = ['add', 'multiply'];
     let x, y;
     /* If either exp1 or exp2 are not integers and contain parentheses to indicate another function, 
     run the splitArguments function again recursively until finding the pair of two integers */
     if(isNaN(+exp1) && exp1.includes('(')) {
         let argsArr = splitArguments(exp1);
-        x = argsArr[0] === 'add' || argsArr[0] === 'multiply' ? calculate(...argsArr) : new Error('Opps, wrong function call!');
+        x = availableFuncs.includes(argsArr[0]) ? calculate(...argsArr) : new Error('Opps, wrong function call!');
         if(x instanceof Error) { return x; }
     } else {
         x = +exp1;
     }
     if(isNaN(+exp2) && exp2.includes('(')) {
         let argsArr = splitArguments(exp2);
-        y = argsArr[0] === 'add' || argsArr[0] === 'multiply' ? calculate(...argsArr) : new Error('Opps, wrong function call!');
+        y = availableFuncs.includes(argsArr[0]) ? calculate(...argsArr) : new Error('Opps, wrong function call!');
         if(y instanceof Error) { return y; }
     } else {
         y = +exp2;
