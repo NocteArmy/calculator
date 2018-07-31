@@ -32,15 +32,15 @@ function splitArguments(str) {
     } else {
         // If x starts as a new function call, find the end of the function call and pass the remainder to y
         let count = 0;
-        for(let i = 0; i < expArr.length; i++) {
-            if(expArr[i] == "(") count++;
-            if(expArr[i] == ")") count--;
+        expArr.every((val, i, arr) => {
+            if(val == "(") { count++; }
+            if(val == ")") { count--; }
             if(count == 0) {
-                x = expArr.slice(0, i + 1).join("");
-                y = expArr.slice(i + 2).join("");
-                break;
+                x = arr.slice(0, i + 1).join("");
+                y = arr.slice(i + 2).join("");
             }
-        }
+            return count != 0;
+        })
     }
     // Return the func call and two expressions as an array
     return [func, x, y];
